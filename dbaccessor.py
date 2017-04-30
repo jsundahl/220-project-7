@@ -14,7 +14,7 @@ class DBAccessor():
                        'c.Email, ' \
                        'e.FirstName as RepFirstName, ' \
                        'e.LastName as RepLastName, ' \
-                       'e.Email as RepEmail' \
+                       'e.Email as RepEmail ' \
                 'FROM customer c JOIN employee e ' \
                 'ON c.SupportRepId = e.EmployeeId'
         return self.execute_query(query)
@@ -26,14 +26,17 @@ class DBAccessor():
 
     def track_info_by_genre(self, genre):
         """ List of tracks including name, album title, artist, and unit price as specified in README"""
-        query = 'SELECT t.name as TrackName,' \
-                       'al.title as AlbumTitle,' \
-                       'ar.name as ArtistName,' \
-                       't.unitPrice as UnitPrice' \
-                'FROM track t join album al' \
-                'ON t.albumId = al.albumId' \
-                'JOIN artist ar' \
-                'ON al.artistId = ar.artistId'
+        query = 'SELECT t.name as TrackName, ' \
+                       'al.title as AlbumTitle, ' \
+                       'ar.name as ArtistName, ' \
+                       't.unitPrice as UnitPrice ' \
+                'FROM track t join album al ' \
+                'ON t.albumId = al.albumId ' \
+                'JOIN artist ar ' \
+                'ON al.artistId = ar.artistId ' \
+                'JOIN genre g ' \
+                'ON t.GenreId = g.GenreId ' \
+                'WHERE g.Name = ' + "\'{}\'".format(genre)
         return self.execute_query(query)
 
     def execute_query(self, query):

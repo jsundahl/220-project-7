@@ -17,7 +17,7 @@ class ReportExample(QWidget):
 
     def initUI(self):
         # create the accessor for queries
-        self.__db = DBAccessor('your path/music.db')
+        self.__db = DBAccessor('test.db')
         # create buttons and their event handler
         allCustBtn = QPushButton('All Customers', self)
         allCustBtn.setCheckable(True)
@@ -48,6 +48,7 @@ class ReportExample(QWidget):
         self.combo = QComboBox()
         # load combo with genres
         # TODO: make the calls to run the appropriate query and get the model
+        model = report_model.get_table_report(self.__db.all_genres())
         self.combo.setModel(model)
         vbox.addWidget(self.combo)
         self.combo.activated[str].connect(self.onActivated)
@@ -64,11 +65,14 @@ class ReportExample(QWidget):
 
         if source.text() == "All Customers":
             # TODO: make the calls to run the appropriate query and get the model
+            model = report_model.get_table_report(self.__db.all_customer_report())
             self.my_table.setModel(model)
             self.my_table.show()
 
         if source.text() == "Genres":
             # TODO: make the calls to run the appropriate query and get the model
+            current_genre = self.combo.currentText()
+            model = report_model.get_table_report(self.__db.track_info_by_genre(current_genre))
             self.my_table.setModel(model)
             self.my_table.show()
 
