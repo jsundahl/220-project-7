@@ -17,7 +17,7 @@ class ReportExample(QWidget):
 
     def initUI(self):
         # create the accessor for queries
-        self.__db = DBAccessor('test.db')
+        self.__db = DBAccessor('music.db')
         # create buttons and their event handler
         allCustBtn = QPushButton('All Customers', self)
         allCustBtn.setCheckable(True)
