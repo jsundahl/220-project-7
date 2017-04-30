@@ -16,12 +16,13 @@ class DBAccessor():
                        'e.LastName as RepLastName, ' \
                        'e.Email as RepEmail ' \
                 'FROM customer c JOIN employee e ' \
-                'ON c.SupportRepId = e.EmployeeId'
+                'ON c.SupportRepId = e.EmployeeId ' \
+                'ORDER BY c.LastName asc'
         return self.execute_query(query)
 
     def all_genres(self):
         """ List of all genre names to populate the combo box as specified in README"""
-        query = "SELECT Name from genre"
+        query = "SELECT Name from genre ORDER BY Name asc"
         return self.execute_query(query)
 
     def track_info_by_genre(self, genre):
@@ -36,7 +37,8 @@ class DBAccessor():
                 'ON al.artistId = ar.artistId ' \
                 'JOIN genre g ' \
                 'ON t.GenreId = g.GenreId ' \
-                'WHERE g.Name = ' + "\'{}\'".format(genre)
+                'WHERE g.Name = ' + "\'{}\'".format(genre) + '' \
+                'ORDER BY ar.name asc'
         return self.execute_query(query)
 
     def execute_query(self, query):
