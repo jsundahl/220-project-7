@@ -7,17 +7,33 @@ class DBAccessor():
 
     def all_customer_report(self):
         """The list of all customers and their representatives as specified in README"""
-        query = 'your query here'
+        query = 'SELECT c.FirstName, ' \
+                       'c.LastName, ' \
+                       'c.Company, ' \
+                       'c.Phone, ' \
+                       'c.Email, ' \
+                       'e.FirstName as RepFirstName, ' \
+                       'e.LastName as RepLastName, ' \
+                       'e.Email as RepEmail' \
+                'FROM customer c JOIN employee e ' \
+                'ON c.SupportRepId = e.EmployeeId'
         return self.execute_query(query)
 
     def all_genres(self):
         """ List of all genre names to populate the combo box as specified in README"""
-        query = "your query here"
+        query = "SELECT Name from genre"
         return self.execute_query(query)
 
     def track_info_by_genre(self, genre):
         """ List of tracks including name, album title, artist, and unit price as specified in README"""
-        query = 'your query here'
+        query = 'SELECT t.name as TrackName,' \
+                       'al.title as AlbumTitle,' \
+                       'ar.name as ArtistName,' \
+                       't.unitPrice as UnitPrice' \
+                'FROM track t join album al' \
+                'ON t.albumId = al.albumId' \
+                'JOIN artist ar' \
+                'ON al.artistId = ar.artistId'
         return self.execute_query(query)
 
     def execute_query(self, query):
@@ -28,3 +44,5 @@ class DBAccessor():
         col_names = next(zip(*cursor.description))
         cursor.close()
         return [col_names] + result_set
+
+# PRAGMA table_info([]);
